@@ -3,6 +3,7 @@ package com.example.tipcalculatorapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -39,6 +40,10 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Switch
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Icon
+import androidx.compose.ui.res.painterResource
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -80,7 +85,9 @@ fun Calculate( modifier: Modifier = Modifier) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
-        modifier = Modifier.padding(40.dp)
+        modifier = Modifier
+            .padding(40.dp)
+            .verticalScroll(rememberScrollState())
     ) {
         Text(
             text = stringResource(R.string.calculate_tip),
@@ -95,6 +102,7 @@ fun Calculate( modifier: Modifier = Modifier) {
         EditNumberField(
             label = R.string.bill_amount,
             value = amountInput,
+            leadingIcon = R.drawable.dollar1,
             onValueChange = { amountInput = it },
             keyboard = KeyboardOptions.Default.copy(
                 keyboardType = KeyboardType.Number,
@@ -102,18 +110,19 @@ fun Calculate( modifier: Modifier = Modifier) {
             ),
             modifier = Modifier
                 .padding(bottom = 32.dp)
-                .fillMaxWidth()
+                .fillMaxWidth(),
         )
         EditNumberField(value = tipInput,
             onValueChange = {
                 tipInput = it},
             label = R.string.tip_per,
+            leadingIcon = R.drawable.per1,
             keyboard = KeyboardOptions.Default.copy(
                 keyboardType = KeyboardType.Number,
                 imeAction = ImeAction.Done),
             modifier = Modifier
                 .padding(bottom = 32.dp)
-                .fillMaxWidth()
+                .fillMaxWidth(),
         )
         RoundTheTipRow(
                 roundUp = roundUp,
@@ -136,6 +145,7 @@ fun Calculate( modifier: Modifier = Modifier) {
 
 @Composable
 fun EditNumberField(@StringRes label : Int,
+                    @DrawableRes leadingIcon : Int,
                     value : String,
                     onValueChange : (String) -> Unit,
                     keyboard : KeyboardOptions,
@@ -145,6 +155,7 @@ fun EditNumberField(@StringRes label : Int,
         onValueChange = onValueChange,
         modifier = modifier,
         label = { Text(stringResource(id = label))},
+        leadingIcon = { Icon(painter = painterResource(id = leadingIcon), null)},
         singleLine = true,
         keyboardOptions = keyboard
     )
