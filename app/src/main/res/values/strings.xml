@@ -4,4 +4,5 @@
     <string name="calculate_tip">Calculate Tip</string>
     <string name="bill_amount">Bill Amount</string>
     <string name="tip_per">Tip Percentage</string>
+    <string name="round_up_tip">Round up tip?</string>
 </resources>
