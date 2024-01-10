@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.annotation.VisibleForTesting
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -63,7 +64,8 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-private fun TipCalculate(amount:Double, tipPercent:Double, round: Boolean ): String{
+@VisibleForTesting
+internal fun TipCalculate(amount:Double, tipPercent:Double, round: Boolean ): String{
     var tip = tipPercent / 100 * amount
     if(round){
         tip = kotlin.math.ceil(tip)
@@ -74,6 +76,7 @@ private fun TipCalculate(amount:Double, tipPercent:Double, round: Boolean ): Str
 
 @Composable
 fun Calculate( modifier: Modifier = Modifier) {
+
     var amountInput by remember { mutableStateOf("") }
     var tipInput by remember { mutableStateOf("") }
     var roundUp by remember { mutableStateOf(false) }
